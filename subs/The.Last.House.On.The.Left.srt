@@ -1,7 +1,60 @@
+
+
 1
 00:01:50,986 --> 00:01:53,321
 الأسبوع اللي بعده
-كان شغال أكتر من المروحة.
+كات شغل عزق 
+["hydrangea", "الهدرانج"],
+  ["notorious", "مشهور بشكل سيء"],
+  ["substantial", "جوهري"],
+  ["compound", "مركب"],
+  ["transfusing", "نقل الدم"],
+  ["recommendation", "توصية"],
+  ["cooperative", "متعاون"],
+  ["connections", "علاقات"],
+  ["premium", "ممتاز"],
+  ["embarrassing", "محرج"],
+  ["memories", "ذكريات"],
+  ["permanently", "بشكل دائم"],
+  ["unsupervised", "بدون إشراف"],
+  ["generator", "مولد"],
+  ["antiseptic", "مطهر"],
+  ["substantial", "جوهري"],
+  ["compound", "مركب"],
+  ["transfusing", "نقل الدم"],
+  ["recommendation", "توصية"],
+  ["cooperative", "متعاون"],
+  ["connections", "علاقات"],
+  ["premium", "ممتاز"],
+  ["embarrassing", "محرج"],
+  ["memories", "ذكريات"],
+  ["permanently", "بشكل دائم"],
+  ["unsupervised", "بدون إشراف"],
+  ["generator", "مولد"],
+  ["antiseptic", "مطهر"],
+  ["substantial", "جوهري"],
+  ["compound", "مركب"],
+  ["transfusing", "نقل الدم"],
+  ["recommendation", "توصية"],
+  ["cooperative", "متعاون"],
+  ["connections", "علاقات"],
+  ["premium", "ممتاز"],
+  ["embarrassing", "محرج"],
+  ["memories", "ذكريات"],
+  ["permanently", "بشكل دائم"],
+  ["unsupervised", "بدون إشراف"],
+  ["generator", "مولد"],
+  ["antiseptic", "مطهر"],
+  ["substantial", "جوهري"],
+  ["compound", "مركب"],
+  ["transfusing", "نقل الدم"],
+  ["recommendation", "توصية"],
+  ["cooperative", "متعاون"],
+  ["connections", "علاقات"],
+  ["premium", "ممتاز"],
+  ["embarrassing", "محرج"],
+  ["memories", "ذكريات"]
+
 
 2
 00:01:53,405 --> 00:01:55,740
