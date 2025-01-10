@@ -522,8 +522,6 @@ const animateElement = (element, durationSeconds = 1) => {
 // #    # #    # #   #  #    # #      #   #          #   #    #   #   #    #
 // #####   ####  #    # #####  ###### #    #         #    ####    #    ####
 // Ensure marked.js is included in your project
-// <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
 async function dyn_ad(options) {
   const {
     containerSelector,
@@ -579,6 +577,8 @@ async function dyn_ad(options) {
     tippy_zindex = 10000, // Set Tippy z-index to topmost
     onPhoneBorders = [], // New parameter for distance adjustment
     emoji = '', // New parameter for emoji attribute
+    shuffleText = false, // New parameter for shuffling text in tippyText
+    shuffleTextTime = 2, // New parameter for shuffle interval in seconds
   } = options;
 
   const container = document.querySelector(containerSelector);
@@ -648,24 +648,55 @@ async function dyn_ad(options) {
     tip_trigger: normalizeParam(tip_trigger, popCount),
     tippy_zindex: normalizeParam(tippy_zindex, popCount),
     onPhoneBorders: normalizeParam(onPhoneBorders, popCount),
-    emoji: normalizeParam(emoji, popCount), // Normalize emoji parameter
+    emoji: normalizeParam(emoji, popCount),
+    shuffleText: normalizeParam(shuffleText, popCount),
+    shuffleTextTime: normalizeParam(shuffleTextTime, popCount),
   };
 
   // Function to apply typewriter effect to tooltip content
   function applyTypewriterEffect(instance, text, speed) {
-    let i = 0;
-    const typewriterInterval = setInterval(() => {
-      if (i < text.length) {
-        const partialText = text.substring(0, i + 1);
-        const markdownContent = marked.parse(partialText);
-        instance.setContent(markdownContent);
-        i++;
-      } else {
-        clearInterval(typewriterInterval);
-      }
-    }, speed);
+    return new Promise((resolve) => {
+      let i = 0;
+      const typewriterInterval = setInterval(() => {
+        if (i < text.length) {
+          const partialText = text.substring(0, i + 1);
+          const markdownContent = marked.parse(partialText);
+          instance.setContent(markdownContent);
+          i++;
+        } else {
+          clearInterval(typewriterInterval);
+          resolve();
+        }
+      }, speed);
+    });
   }
 
+  // Function to shuffle text in the tooltip with typewriter effect
+  async function shuffleTooltipText(instance, texts, interval, typewriterEffect, typewriterSpeed) {
+    let shuffleIndex = 0;
+
+    const shuffleNextText = async () => {
+      const shuffledText = texts[shuffleIndex % texts.length];
+      if (typewriterEffect) {
+        await applyTypewriterEffect(instance, shuffledText, typewriterSpeed);
+      } else {
+        const markdownContent = marked.parse(shuffledText);
+        instance.setContent(markdownContent);
+      }
+      shuffleIndex++;
+      setTimeout(shuffleNextText, interval * 1000);
+    };
+
+    // Start the first shuffle
+    shuffleNextText();
+
+    // Stop shuffling when the tooltip is hidden
+    instance.popper.addEventListener('mouseleave', () => {
+      clearTimeout(shuffleNextText);
+    });
+  }
+
+  // Function to create pop elements
   function createPopElements(src, index) {
     if (Array.isArray(src)) {
       src = randomSelect(src);
@@ -899,8 +930,6 @@ async function dyn_ad(options) {
       }, normalizedParams.slideInTime[index]);
     }, arriveDelay);
 
-
-
     if (normalizedParams.parallax[index]) {
       const parallaxHandler = (event) => {
         const x = (event.clientX - window.innerWidth / 2) * normalizedParams.parallax_strength[index] / 100;
@@ -1057,10 +1086,17 @@ async function dyn_ad(options) {
       const typewriterSpeed = restActionParams.typewriterSpeed !== undefined ? restActionParams.typewriterSpeed : normalizedParams.typewriterSpeed[popIndex];
 
       if (typewriterEffect) {
-        applyTypewriterEffect(element._tippyInstance, tooltipText, typewriterSpeed);
+        await applyTypewriterEffect(element._tippyInstance, tooltipText, typewriterSpeed);
       } else {
         const markdownContent = marked.parse(tooltipText);
         element._tippyInstance.setContent(markdownContent);
+      }
+
+      // Start shuffling text if shuffleText is enabled
+      if (restActionParams.shuffleText || normalizedParams.shuffleText[popIndex]) {
+        const shuffleTextArray = Array.isArray(restActionParams.tooltipText) ? restActionParams.tooltipText : [restActionParams.tooltipText];
+        const shuffleInterval = restActionParams.shuffleTextTime || normalizedParams.shuffleTextTime[popIndex];
+        shuffleTooltipText(element._tippyInstance, shuffleTextArray, shuffleInterval, typewriterEffect, typewriterSpeed);
       }
 
       // Show the tooltip if autoShow is enabled
@@ -1157,6 +1193,8 @@ async function dyn_ad(options) {
     createPopElements(popImages[i], i);
   }
 }
+
+
 //---endec-----
 
 function zend(normalText, hiddenMessage) {

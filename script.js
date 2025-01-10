@@ -106,9 +106,10 @@ dyn_ad({
     emoji:`🐶`,
     position: 'fixed',
     borderPosition: 'bottom',
-    popImages: [["https://cdn3d.iconscout.com/3d/premium/thumb/scroll-map-3d-illustration-download-in-png-blend-fbx-gltf-file-formats--direction-isometric-pack-miscellaneous-illustrations-4024740.png?f=webp"
+    popImages: [["https://cdn3d.iconscout.com/3d/premium/thumb/english-book-3d-icon-download-in-png-blend-fbx-gltf-file-formats--open-abc-alphabet-education-vol1-pack-school-icons-6634381.png?f=webp"
         ,"https://cdn3d.iconscout.com/3d/premium/thumb/money-bag-3d-illustration-download-in-png-blend-fbx-gltf-file-formats--coin-sack-finance-adventure-pack-holidays-illustrations-3626614.png?f=webp"
         ,"https://cdn3d.iconscout.com/3d/premium/thumb/books-3d-icon-download-in-png-blend-fbx-gltf-file-formats--bookshelf-bookcase-book-shelf-library-pack-icons-6174790.png?f=webp"
+        ,"https://cdn3d.iconscout.com/3d/premium/thumb/treasure-3d-illustration-download-in-png-blend-fbx-gltf-file-formats--gold-box-wealth-business-jewellery-money-adventure-pack-holidays-illustrations-4060914.png?f=webp"
     ]], // Replace with your image path
     tooltipTheme: 'bubble',
     tippy_zindex:999,
@@ -345,13 +346,13 @@ function movie(magnet, subtitles) {
     {
       title: "مساحه اعلانيه",
       thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHWLM5Jt6aBu9y2IQS_boByaixDQQgFm2xAg&s",
-      callback: () => console.log(`ad1`),
+      callback: () => liveChatNow(),
       tip: "لو انت عاوز اعلان بطريقه كريتيف لمنتجك تعال كلمنا"
     },
     {
         title: "مساحه اعلانيه",
         thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHWLM5Jt6aBu9y2IQS_boByaixDQQgFm2xAg&s",
-        callback: () => console.log(`ad1`),
+        callback: () => liveChatNow(),
         tip: "لو انت عاوز اعلان بطريقه كريتيف لمنتجك تعال كلمنا"
       },
   ];
@@ -464,7 +465,7 @@ function list(itemsArray, type = 'movies') {
             title: `اختار ${type === 'movies' ? 'فيلمك' : type === 'youtube' ? 'يوتيوبك' : type === 'websites' ? 'موقعك' : 'تعمل ايه'}`,
             html: `
                 <div class="search-container">
-                    <input type="text" id="item-search" placeholder="Search ${type === 'movies' ? 'Movies' : type === 'youtube' ? 'Playlists' : type === 'websites' ? 'Websites' : 'Iframes'}" class="search-bar">
+                    <input type="text" id="item-search" placeholder="دور علي ${type === 'movies' ? 'افلام' : type === 'youtube' ? 'اغاني' : type === 'websites' ? 'خدمات' : 'خدمات'}" class="search-bar">
                     <select id="genre-filter" class="genre-dropdown">
                         ${genreOptions.join('')}
                     </select>
@@ -620,15 +621,16 @@ async function AutoVocab(url) {
         const text = await response.text();
         console.log("Fetched text:", text); // Log the fetched text for debugging
 
-        // Regular expression to match [english word, arabic word] or ["english word","arabic word"]
-        const regex = /\[["']?([\w\s]+)["']?,["']?([\w\s\u0600-\u06FF]+)["']?\]/g;
+        // Regular expression to match:
+        // [english, arabic] or ["english","arabic"] or ['english','arabic'] or [`english`,`arabic`]
+        const regex = /\[(["'`]?)(.*?)\1,\s*(["'`]?)(.*?)\3\]/g;
         const matches = [];
         let match;
 
         // Extract all matches
         while ((match = regex.exec(text)) !== null) {
-            console.log("Match found:", match[1], match[2]); // Log each match for debugging
-            matches.push([match[1].trim(), match[2].trim()]);
+            console.log("Match found:", match[2], match[4]); // Log each match for debugging
+            matches.push([match[2].trim(), match[4].trim()]);
         }
 
         if (matches.length === 0) {
@@ -923,8 +925,23 @@ async function vocab() {
 }
 let title = ''; // Global variable to store the song name
 
+// Add Tippy.js to your project
+const tippyScript = document.createElement('script');
+tippyScript.src = 'https://unpkg.com/tippy.js@6.3.7/dist/tippy-bundle.umd.js';
+document.head.appendChild(tippyScript);
+
+// Add Tippy CSS
+const tippyStyle = document.createElement('link');
+tippyStyle.rel = 'stylesheet';
+tippyStyle.href = 'https://unpkg.com/tippy.js@6.3.7/dist/tippy.css';
+document.head.appendChild(tippyStyle);
+
+let isVideoHidden = false; // Global variable to track video visibility state
+let hateList = new Set(); // Global set to store disliked videos
+let dislikeTimeout = null; // Global variable to track dislike timeout
+
 function youtube(playlistsArray, customButtons = [], directInput = null) {
-    removeCachedMovie()
+    removeCachedMovie();
 
     // Ensure YouTube IFrame API is loaded
     if (!window.YT || !window.YT.Player) {
@@ -981,6 +998,11 @@ function youtube(playlistsArray, customButtons = [], directInput = null) {
         }
     }
 
+    // Function to get YouTube thumbnail URL
+    function getThumbnailUrl(videoId) {
+        return `https://img.youtube.com/vi/${videoId}/default.jpg`;
+    }
+
     // Create modal structure for YouTube player
     const youtubeModalHTML = `
         <div id="youtube-modal" class="youtube-modal">
@@ -1011,6 +1033,9 @@ function youtube(playlistsArray, customButtons = [], directInput = null) {
     `;
     document.body.insertAdjacentHTML('beforeend', downloadModalHTML);
 
+    let currentVideoIndex = 0;
+    let videoIds = [];
+
     // Function to initialize the YouTube player
     function initializePlayer(id, type) {
         const webtorContainer = document.querySelector('#webtor-container');
@@ -1035,6 +1060,8 @@ function youtube(playlistsArray, customButtons = [], directInput = null) {
                 events: {
                     onReady: event => {
                         console.log('YouTube Player is ready.');
+                        applyVideoVisibilityState(); // Apply the visibility state when the player is ready
+                        checkHateListAndSkip(); // Check if the current video is in the hate list
                     },
                     onError: error => {
                         console.error('YouTube Player encountered an error:', error);
@@ -1071,13 +1098,53 @@ function youtube(playlistsArray, customButtons = [], directInput = null) {
                         <path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z" fill="currentColor"/>
                     </svg>
                 </button>
+                <button class="custom-button" data-tip="Remove Video" id="remove-video-button">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" fill="${isVideoHidden ? 'green' : 'currentColor'}"/>
+                    </svg>
+                </button>
+                <button class="custom-button" data-tip="Dislike" id="dislike-button">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 3H6C5.17 3 4.46 3.5 4.16 4.22L1.14 11.27C1.05 11.5 1 11.74 1 12V14C1 15.1 1.9 16 3 16H9.31L8.36 20.57C8.34 20.67 8.33 20.77 8.33 20.88C8.33 21.3 8.5 21.67 8.77 21.94L9.83 23L16.41 16.41C16.78 16.05 17 15.55 17 15V5C17 3.9 16.1 3 15 3ZM19 3H23V15H19V3Z" fill="currentColor"/>
+                    </svg>
+                </button>
                 ${customButtons.map(button => `
                     <button class="custom-button" data-tip="${button.tip}" style="--neon-color: ${button.neonColor};">
                         ${button.svg}
                     </button>
                 `).join('')}
+                ${videoIds.length > 1 ? `
+                    <button class="custom-button" data-tip="Shuffle" id="shuffle-button">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                    <button class="custom-button" data-tip="Previous" id="previous-button">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                    <button class="custom-button" data-tip="Next" id="next-button">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                ` : ''}
             `;
             webtorContainer.appendChild(iframeControls);
+
+            // Add Tippy tooltips for Next and Previous buttons
+            if (videoIds.length > 1) {
+                tippy('#previous-button', {
+                    content: `<img src="${getThumbnailUrl(videoIds[currentVideoIndex - 1])}" alt="Previous Video Thumbnail" style="width: 120px; height: auto;">`,
+                    allowHTML: true,
+                });
+
+                tippy('#next-button', {
+                    content: `<img src="${getThumbnailUrl(videoIds[currentVideoIndex + 1])}" alt="Next Video Thumbnail" style="width: 120px; height: auto;">`,
+                    allowHTML: true,
+                });
+            }
 
             // Add event listeners for buttons
             iframeControls.querySelectorAll('.custom-button').forEach((button, index) => {
@@ -1117,8 +1184,47 @@ function youtube(playlistsArray, customButtons = [], directInput = null) {
                                 console.error('Failed to copy song link:', err);
                             });
                     });
+                } else if (index === 3) {
+                    // Remove Video button
+                    button.addEventListener('click', () => {
+                        isVideoHidden = !isVideoHidden; // Toggle the visibility state
+                        applyVideoVisibilityState(); // Apply the visibility state
+                        updateRemoveVideoButton(); // Update the button's SVG color
+                    });
+                } else if (index === 4) {
+                    // Dislike button
+                    button.addEventListener('click', () => {
+                        const videoId = window.YT.player.getVideoData().video_id;
+                        if (hateList.has(videoId)) {
+                            // If already disliked, remove from hate list
+                            hateList.delete(videoId);
+                            clearTimeout(dislikeTimeout); // Clear the skip timeout
+                            alert('Video removed from hate list.');
+                        } else {
+                            // Add to hate list
+                            hateList.add(videoId);
+                            alert('Video added to hate list. It will be skipped after 4 seconds.');
+                            checkHateListAndSkip(); // Check and skip if necessary
+                        }
+                        updateDislikeButton(); // Update the dislike button's appearance
+                    });
+                } else if (index === 5 + customButtons.length && videoIds.length > 1) {
+                    // Shuffle button
+                    button.addEventListener('click', () => {
+                        shuffleVideos();
+                    });
+                } else if (index === 6 + customButtons.length && videoIds.length > 1) {
+                    // Previous button
+                    button.addEventListener('click', () => {
+                        playPreviousVideo();
+                    });
+                } else if (index === 7 + customButtons.length && videoIds.length > 1) {
+                    // Next button
+                    button.addEventListener('click', () => {
+                        playNextVideo();
+                    });
                 } else {
-                    customButtons[index - 3].callback({ url: directInput });
+                    customButtons[index - 5].callback({ url: directInput });
                 }
             });
 
@@ -1154,26 +1260,125 @@ function youtube(playlistsArray, customButtons = [], directInput = null) {
         }
     }
 
+    // Function to apply the video visibility state
+    function applyVideoVisibilityState() {
+        const playerDiv = document.getElementById('youtube-player');
+        const thumbnailImg = document.getElementById('youtube-thumbnail');
+
+        if (isVideoHidden) {
+            // Hide the video and show the thumbnail
+            playerDiv.style.display = 'none';
+            const thumbnailUrl = getThumbnailUrl(window.YT.player.getVideoData().video_id);
+            const thumbnail = document.createElement('img');
+            thumbnail.id = 'youtube-thumbnail';
+            thumbnail.src = thumbnailUrl;
+            thumbnail.style.width = '500px';
+            thumbnail.style.height = '300px';
+            document.querySelector('#webtor-container').appendChild(thumbnail);
+        } else {
+            // Show the video and hide the thumbnail
+            playerDiv.style.display = 'block';
+            if (thumbnailImg) thumbnailImg.remove();
+        }
+    }
+
+    // Function to update the Remove Video button's SVG color
+    function updateRemoveVideoButton() {
+        const removeVideoButton = document.getElementById('remove-video-button');
+        if (removeVideoButton) {
+            const svgPath = removeVideoButton.querySelector('path');
+            if (svgPath) {
+                svgPath.setAttribute('fill', isVideoHidden ? 'green' : 'currentColor');
+            }
+        }
+    }
+
+    // Function to update the Dislike button's appearance
+    function updateDislikeButton() {
+        const dislikeButton = document.getElementById('dislike-button');
+        if (dislikeButton) {
+            const svgPath = dislikeButton.querySelector('path');
+            if (svgPath) {
+                const videoId = window.YT.player.getVideoData().video_id;
+                svgPath.setAttribute('fill', hateList.has(videoId) ? 'red' : 'currentColor');
+            }
+        }
+    }
+
+    // Function to check if the current video is in the hate list and skip it
+    function checkHateListAndSkip() {
+        const videoId = window.YT.player.getVideoData().video_id;
+        if (hateList.has(videoId)) {
+            dislikeTimeout = setTimeout(() => {
+                playNextVideo(); // Skip to the next video after 4 seconds
+            }, 4000);
+        }
+    }
+
+    // Function to shuffle videos
+    function shuffleVideos() {
+        for (let i = videoIds.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [videoIds[i], videoIds[j]] = [videoIds[j], videoIds[i]];
+        }
+        currentVideoIndex = 0;
+        initializePlayer(videoIds[currentVideoIndex], 'video');
+    }
+
+    // Function to play the next video
+    function playNextVideo() {
+        if (currentVideoIndex < videoIds.length - 1) {
+            currentVideoIndex++;
+            initializePlayer(videoIds[currentVideoIndex], 'video');
+        }
+    }
+
+    // Function to play the previous video
+    function playPreviousVideo() {
+        if (currentVideoIndex > 0) {
+            currentVideoIndex--;
+            initializePlayer(videoIds[currentVideoIndex], 'video');
+        }
+    }
+
     // Directly call the logic to handle playlist selection and player initialization
     (async () => {
         // Wait for the YouTube API to load
         await window.youtubeAPIReady;
 
         if (directInput) {
-            const { type, id } = extractId(directInput);
-            if (id) {
-                initializePlayer(id, type);
+            if (Array.isArray(directInput)) {
+                videoIds = directInput.map(input => extractId(input).id).filter(id => id);
+                if (videoIds.length > 0) {
+                    initializePlayer(videoIds[currentVideoIndex], 'video');
+                } else {
+                    console.error('No valid video IDs found in the direct input array.');
+                }
             } else {
-                console.error('No valid playlist ID or video ID found in the direct input.');
+                const { type, id } = extractId(directInput);
+                if (id) {
+                    initializePlayer(id, type);
+                } else {
+                    console.error('No valid playlist ID or video ID found in the direct input.');
+                }
             }
         } else {
             const selectedPlaylist = await list(playlistsArray, 'playlists');
             if (selectedPlaylist?.url) {
-                const { type, id } = extractId(selectedPlaylist.url);
-                if (id) {
-                    initializePlayer(id, type);
+                if (Array.isArray(selectedPlaylist.url)) {
+                    videoIds = selectedPlaylist.url.map(url => extractId(url).id).filter(id => id);
+                    if (videoIds.length > 0) {
+                        initializePlayer(videoIds[currentVideoIndex], 'video');
+                    } else {
+                        console.error('No valid video IDs found in the selected playlist array.');
+                    }
                 } else {
-                    console.error('No valid playlist ID or video ID found in the URL.');
+                    const { type, id } = extractId(selectedPlaylist.url);
+                    if (id) {
+                        initializePlayer(id, type);
+                    } else {
+                        console.error('No valid playlist ID or video ID found in the URL.');
+                    }
                 }
             } else {
                 console.error('No playlist selected or selected playlist does not have a URL.');
@@ -1181,6 +1386,7 @@ function youtube(playlistsArray, customButtons = [], directInput = null) {
         }
     })();
 }
+
 function website(websitesArray, customButtons = []) {
     // Directly call the logic to handle website selection and iframe injection
     (async () => {
@@ -2280,93 +2486,26 @@ xat();
 
         
 
-  //tutos
-
-  
-dyn_ad({
-    containerSelector: 'body', // Replace with your container selector
-    id: 'tutos',
-    position: 'fixed',
-    borderPosition: 'bottom',
-    popImages: [["https://i.ibb.co/JkjSyC1/tutico.png"
-    ]], // Replace with your image path
-    tooltipTheme: 'bubble',
-    tippy_zindex:999,
-    zIndex: 4,
-    imageSize:100,
-    emoji: '💰',
-    tip:`دوس عليا و اعمل فولو لكل الصفحات...هيتفتحلك حجات جديده و هظبطك...من غير ما تدفع جنيه`,
-    distance: [[-280, -230]],
-
-    scenario: [
-    [
-    
-      {
-        delay: 2000,
-          event: (element) => {
-      
-  
-// Default social media items
-const socialItems = [
-    {
-      color: '#ff0000',
-      gradientColor: '#c4302b',
-      size: 70,
-      icon: '<svg viewBox="0 0 24 24"><path d="M12 19c-2.3 0-6.4-.2-8.1-.6-.7-.2-1.2-.7-1.4-1.4-.3-1.1-.5-3.4-.5-5s.2-3.9.5-5c.2-.7.7-1.2 1.4-1.4C5.6 5.2 9.7 5 12 5s6.4.2 8.1.6c.7.2 1.2.7 1.4 1.4.3 1.1.5 3.4.5 5s-.2 3.9-.5 5c-.2.7-.7 1.2-1.4 1.4-1.7.4-5.8.6-8.1.6 0 0 0 0 0 0z"/><path d="M9.75 15.25v-6.5L15.25 12l-5.5 3.25z"/></svg>',
-      title: 'YouTube 1',
-      callback: () => window.open('https://youtube.com', '_blank')
-    },
-    {
-      color: '#ff3897',
-      gradientColor: '#833ab4',
-      size: 70,
-      icon: '<svg viewBox="0 0 24 24"><path d="M16.5 7.5h.01M12 7.5c-2.485 0-4.5 2.015-4.5 4.5s2.015 4.5 4.5 4.5 4.5-2.015 4.5-4.5-2.015-4.5-4.5-4.5zM12 1.5h-3.75c-3.75 0-5.25 1.5-5.25 5.25v10.5c0 3.75 1.5 5.25 5.25 5.25h7.5c3.75 0 5.25-1.5 5.25-5.25v-10.5c0-3.75-1.5-5.25-5.25-5.25H12z"/></svg>',
-      title: 'Instagram 1',
-      callback: () => window.open('https://instagram.com', '_blank')
-    },
-    {
-      color: '#ff0050',
-      gradientColor: '#00f2ea',
-      size: 70,
-      icon: '<svg viewBox="0 0 24 24"><path d="M21 7.5v9c0 3-1.5 4.5-4.5 4.5h-9c-3 0-4.5-1.5-4.5-4.5v-9c0-3 1.5-4.5 4.5-4.5h9c3 0 4.5 1.5 4.5 4.5z"/><path d="M9.72 15.88v-7.5c0-.62.68-1 1.23-.69l6.76 3.75c.54.3.54 1.08 0 1.38l-6.76 3.75c-.55.31-1.23-.07-1.23-.69z"/></svg>',
-      title: 'TikTok 1',
-      callback: () => window.open('https://tiktok.com', '_blank')
-    },
-    {
-      color: '#ff0000',
-      gradientColor: '#c4302b',
-      size: 70,
-      icon: '<svg viewBox="0 0 24 24"><path d="M12 19c-2.3 0-6.4-.2-8.1-.6-.7-.2-1.2-.7-1.4-1.4-.3-1.1-.5-3.4-.5-5s.2-3.9.5-5c.2-.7.7-1.2 1.4-1.4C5.6 5.2 9.7 5 12 5s6.4.2 8.1.6c.7.2 1.2.7 1.4 1.4.3 1.1.5 3.4.5 5s-.2 3.9-.5 5c-.2.7-.7 1.2-1.4 1.4-1.7.4-5.8.6-8.1.6 0 0 0 0 0 0z"/><path d="M9.75 15.25v-6.5L15.25 12l-5.5 3.25z"/></svg>',
-      title: 'YouTube 2',
-      callback: () => window.open('https://youtube.com', '_blank')
-    },
-    {
-      color: '#ff0050',
-      gradientColor: '#00f2ea',
-      size: 70,
-      icon: '<svg viewBox="0 0 24 24"><path d="M21 7.5v9c0 3-1.5 4.5-4.5 4.5h-9c-3 0-4.5-1.5-4.5-4.5v-9c0-3 1.5-4.5 4.5-4.5h9c3 0 4.5 1.5 4.5 4.5z"/><path d="M9.72 15.88v-7.5c0-.62.68-1 1.23-.69l6.76 3.75c.54.3.54 1.08 0 1.38l-6.76 3.75c-.55.31-1.23-.07-1.23-.69z"/></svg>',
-      title: 'TikTok 2',
-      callback: () => window.open('https://tiktok.com', '_blank')
-    },
-    {
-      color: '#ff3897',
-      gradientColor: '#833ab4',
-      size: 70,
-      icon: '<svg viewBox="0 0 24 24"><path d="M16.5 7.5h.01M12 7.5c-2.485 0-4.5 2.015-4.5 4.5s2.015 4.5 4.5 4.5 4.5-2.015 4.5-4.5-2.015-4.5-4.5-4.5zM12 1.5h-3.75c-3.75 0-5.25 1.5-5.25 5.25v10.5c0 3.75 1.5 5.25 5.25 5.25h7.5c3.75 0 5.25-1.5 5.25-5.25v-10.5c0-3.75-1.5-5.25-5.25-5.25H12z"/></svg>',
-      title: 'Instagram 2',
-      callback: () => window.open('https://instagram.com', '_blank')
-    }
-  ];
-  
-  // Usage: Just create a new instance to spawn the menu
-  new RadialMenu(socialItems);
-      
-      },
-          event_type: 'click'
-        },
-
-  
-  ],
-    ],
-
-  });
+        function liveChatNow() {
+            // Create a new script element
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.async = true;
+            script.src = 'https://embed.tawk.to/672648744304e3196adc5992/1ibmom2g2';
+            script.charset = 'UTF-8';
+            script.setAttribute('crossorigin', '*');
+          
+            // Create a container div to hold the script and set its z-index
+            var container = document.createElement('div');
+            container.style.position = 'fixed';
+            container.style.top = '0';
+            container.style.left = '0';
+            container.style.zIndex = '99999';
+          
+            // Append the script to the container
+            container.appendChild(script);
+          
+            // Insert the container at the top of the body
+            document.body.insertBefore(container, document.body.firstChild);
+          }
+          

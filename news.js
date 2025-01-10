@@ -3,6 +3,44 @@ const social_prop_ads = [`لو دوست علي تتوس وعملت لايك لم
 ,`تعرف ان تتوس عمل الويبسايت دا علشانك؟ يبقي لايك وفولو لصفحاته مش هتضر`
 ]
 
+const tutorial = [
+    "لو دوست عليا وعملت فولو فيه فرصه تكسب فلوس تجيب اللي انت عاوزه من الشوب",
+    "السبتايتل مش باين؟ دوس علي علامه السي سي اللي تحت الفيلم و دوس علي كلمه ايجيبت هيشتغل معاك",
+    "لو بتتفرج علي الفيلم و بطئ حمله من الايكونات اللي فوق وحمل معاه السبتايتل"
+    ,"تعرف ان الرسيفر للأفلام...و السماعات للأغاني و البلايستيشن للخدمات؟"
+    ,"تعرف انك لو امتحنت علي كلمات الفيلم بتاخد فلوس؟ و الفلوس دي تجيب منها حجات من الكشك؟"
+    ,"تعرف ان لو دوست عليا بيجيلك فلوس؟ ولو عملت فولو للسوشيال ميديا بتوعي بيجيلك فلوس اكتر؟"
+    ,"تعرف ان انا هنا بجيبلك الافلام الحلوه بس؟ لان فيه حجات ما يعلم بيها الا ربنا"
+    , "تعرف ان فيه شات تحت علي الشمال تقدر تكلم فيه الناس اللي بيتفرجو؟ و تكلمني انا كمان هناك"
+    , "تعرف انك لو عاوز تشهر فيديو او اغنيه او تعمل اعلان تفدر تدوس علي المساحه الاعلانيه و انا هظبطلك اعلان"
+    , "تعرف ان هنا المنصه الوحيده اللي مش بتجيب اعلانات بضان كل كلكايه؟ بس كل هدفنا انك تشهر المنصه"
+    , "تعرف انك لو صانع محتوي و عملت اعلان لمنصه فُرجه هنحط قناتك عندنا في المنصه و نعلن لبعضشينا؟"
+    , "تعرف ان المنصه دي معموله بالكامل من شخص واحد بس؟ فعاوز ناس تساعد"
+    , "تعرف ان لو دوست علي الكتب او الفلوس الواقعين عالارض هتمتحن علي كلمات الفيلم..بس تختار الفيلم الاول"
+    , "تعرف ان تقدر تلون اوضتك بنفسك لو دوست علي الكتاب رقم 2"
+    , "تعرف انك تقدر تحفظ فلوسك في ملف علي جهازك من زرار (متخليش تعبك يضيع) في حاله كنت هتنزل ويندوز"
+    , "تعرف ان فيه زرار عامل شبه طوز الدره دا بيخليك تعمل الفيلم برابط مباشر سريع في حاله كان بطئ علي المنصه...بس ابقي حمل السبتايتل من زرار التحميل لأنها منفصله عن الفيلم"
+]
+
+
+notify({
+    name: 'updates',
+    title: 'تحديثات',
+    emoji: '👉',
+    message: `
+   🎬 حطينا 4 افلام ولسه فيه كمان يا مان...  
+تابع الصفحات بتاعتنا علشان يجيلك الجديد اول باول!  
+
+[![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/@tut_os)  [![TikTok](https://img.shields.io/badge/TikTok-000000?style=for-the-badge&logo=tiktok&logoColor=white)](https://tiktok.com/@tut.os)  
+    `
+    ,
+    position: 'right',
+    y: 200, // 200px from top
+    backgroundColor: '#2196F3',
+    textColor: '#ffffff',
+    notificationCount: 2,
+    isCache: false
+  });
 
 
 
@@ -103,6 +141,7 @@ const social_prop_ads = [`لو دوست علي تتوس وعملت لايك لم
             callback: () =>
                 theme({
                     // Felfel Sheta (Chilly Pepper)
+                    color1:'#ffcc00',
                     floor1: '#ffcc00',    // Golden Yellow
                     floor2: '#ff6f00',    // Bright Orange
                     desk1: '#f57c00',     // Sunset Orange
@@ -118,6 +157,7 @@ const social_prop_ads = [`لو دوست علي تتوس وعملت لايك لم
              callback: () => 
                 theme({
                     // Lemo Ba'as (Sad Lemon)
+                    color1:'#ffcc00',
                     floor1: '#ffff00',    // Lemon Yellow
                     floor2: '#fdd835',    // Golden Yellow
                     desk1: '#ffee58',     // Bright Yellow
@@ -133,6 +173,7 @@ const social_prop_ads = [`لو دوست علي تتوس وعملت لايك لم
             callback: () => 
                 theme({
                     // Asmar Balady (Authentic Tan)
+                    color1:'#795548',
                     floor1: '#795548',    // Cocoa Brown
                     floor2: '#5d4037',    // Rich Mocha
                     desk1: '#6d4c41',     // Earthy Brown
@@ -147,6 +188,8 @@ const social_prop_ads = [`لو دوست علي تتوس وعملت لايك لم
             { id: 5, thumbnail: 'https://static.vecteezy.com/system/resources/thumbnails/003/031/750/small_2x/dark-blue-wide-background-with-radial-blurred-gradient-vector.jpg', title: 'زرقان وروقان', price: 41300, tip: 'اللي بيحب الازرقات...ليلتكم زرقه ان شاء الله', emoji: '🍀', type: 'اوضه', callback: () => 
                     theme({
                         // Bahr Shisha (Shisha Ocean)
+                        color1: '#00bcd4',    // Turquoise
+
                         floor1: '#00bcd4',    // Turquoise
                         floor2: '#0097a7',    // Deep Aqua
                         desk1: '#80deea',     // Soft Cyan
@@ -162,6 +205,7 @@ const social_prop_ads = [`لو دوست علي تتوس وعملت لايك لم
             {  thumbnail: 'https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1693.jpg', title: 'النسوان و العيال المتنيه', price: 34000, tip: 'الوردي جميل...للنسوان و العيال الشواذ..لو مش واحده و بتستخدمه تبقي عيل متني', emoji: '🌈', type: 'اوضه', callback: () => 
                 theme({
                     // Wi7da Nediya (Soft Feminine)
+                    color1:'#ff69b4',
                     floor1: '#ff69b4',    // Hot Pink
                     floor2: '#f50057',    // Deep Magenta
                     desk1: '#ff4081',     // Blush Pink
@@ -176,6 +220,7 @@ const social_prop_ads = [`لو دوست علي تتوس وعملت لايك لم
         },
             {  thumbnail: 'https://static.vecteezy.com/system/resources/thumbnails/001/986/084/small/light-green-yellow-gradient-blur-backdrop-vector.jpg', title: 'الماتركس', price: 22883, tip: 'اوعا الاخضر هياكل كل حاجه', emoji: '✨', type: 'اوضه', callback: () => 
                 theme({
+                    color1:'#4caf50',
                     floor1: '#000000',    // Absolute Black
                     floor2: '#1b1b1b',    // Deep Charcoal
                     desk1: '#4caf50',     // Matrix Green
@@ -191,6 +236,7 @@ const social_prop_ads = [`لو دوست علي تتوس وعملت لايك لم
             },
             { id: 8, thumbnail: 'https://img.freepik.com/free-photo/blurred-gradient-abstract-background-with-vivid-primary-colors_58702-1207.jpg', title: 'اللوان و جنان', price: 77823, tip: 'جنان يا صاحبي', emoji: '🎉', type: 'اوضه', callback: () => 
                 theme({
+                    color1:'#101010',
                     floor1: '#101010',    // Deep Gray
                     floor2: '#2e2e2e',    // Charcoal
                     desk1: '#3d5afe',     // Electric Blue
@@ -229,16 +275,16 @@ const social_prop_ads = [`لو دوست علي تتوس وعملت لايك لم
                     animate: false, // Disable animation
                   })
              },
-            { id: 11, thumbnail: 'https://img.freepik.com/premium-vector/botanical-seamless-pattern-floral-background-botanical-background_176161-38.jpg?semt=ais_hybrid', title: 'Item 11', price: 31200, tip: 'This is item 11', emoji: '🌙', type: 'typeB', callback: () => 
+            { id: 11, thumbnail: 'https://i.pinimg.com/736x/86/e7/4d/86e74d47d1420e902d7b52f21ff92fc0.jpg', title: 'بلاط الروعه', price: 31200, tip: 'روعه و يليق مع الناس الصلعه', emoji: '🌙', type: 'بلاط', callback: () => 
                 patternize('.floor', {
                     images: [
-                      "https://img.freepik.com/premium-vector/botanical-seamless-pattern-floral-background-botanical-background_176161-38.jpg?semt=ais_hybrid",
+                      "https://i.pinimg.com/736x/86/e7/4d/86e74d47d1420e902d7b52f21ff92fc0.jpg",
                     ],
                     height: '300%',
                     rotation: 0,
                     gapX: 0,
                     gapY: 0,
-                    size: { width: 150, height: 150 },
+                    size: { width: 550, height: 550 },
                     animate: false, // Disable animation
                   })
             },
@@ -501,20 +547,93 @@ cachedItems.forEach(itemIndex => {
     if (item) item.callback();
 });
 
+
+// Global variables
+let currentView = 'shop'; // Tracks the current view: 'shop' or 'bought'
+let boughtItems = JSON.parse(localStorage.getItem('boughtItems')) || []; // Bought items
+
+// Arabic translations for button text
+const arabicText = {
+    buy: "اشتري",
+    equip: "حطه",
+    unequip: "شيله",
+    shop: "الكشك",
+    boughtItems: "شنطتي",
+    previous: "اللي فات",
+    next: "اللي جي"
+};
+
+// Callback function for equip/unequip logic
+function handleEquipUnequip(globalIndex) {
+    if (cachedItems.includes(globalIndex)) {
+        // Unequip item
+        cachedItems = cachedItems.filter(i => i !== globalIndex);
+    } else {
+        // Check if there's an active item of the same type
+        const activeItemOfSameType = cachedItems.find(i => {
+            const activeItem = shopItems[i];
+            return activeItem && activeItem.type === shopItems[globalIndex].type;
+        });
+
+        if (activeItemOfSameType) {
+            // Deactivate the older item
+            cachedItems = cachedItems.filter(i => i !== activeItemOfSameType);
+        }
+
+        // Equip the new item
+        cachedItems.push(globalIndex);
+    }
+
+    // Update localStorage
+    localStorage.setItem('cachedItems', JSON.stringify(cachedItems));
+
+    // Re-render the modal based on the current view
+    if (currentView === 'shop') {
+        renderShopModal(currentPage);
+    } else {
+        renderBoughtItemsModal();
+    }
+}
+
+// Render the navigation bar
+function renderNavigationBar() {
+    return `
+        <div class="navigation-bar">
+            <button class="nav-button neo-brutalism" onclick="openShop()">
+                🛒 ${arabicText.shop}
+            </button>
+            <button class="nav-button neo-brutalism bought-items-btn" onclick="openBoughtItems()">
+                🎒 ${arabicText.boughtItems}
+            </button>
+        </div>
+    `;
+}
+
+// Open the shop modal
 function openShop() {
+    currentView = 'shop';
     renderShopModal(currentPage);
 }
 
+// Open the bought items modal
+function openBoughtItems() {
+    currentView = 'bought';
+    renderBoughtItemsModal();
+}
+
+// Render the shop modal
 function renderShopModal(page) {
+    const sortedShopItems = shopItems.slice().sort((a, b) => a.type.localeCompare(b.type));
     const startIndex = (page - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const itemsToShow = shopItems.slice(startIndex, endIndex);
+    const itemsToShow = sortedShopItems.slice(startIndex, endIndex);
 
     const itemsHtml = itemsToShow.map((item, index) => {
-        const globalIndex = startIndex + index;
+        const globalIndex = shopItems.indexOf(item);
+        const isBought = boughtItems.includes(globalIndex);
         const isCached = cachedItems.includes(globalIndex);
         const isExpensive = score < item.price;
-        const isAffordable = score >= item.price && !isCached;
+        const isAffordable = score >= item.price && !isBought;
 
         let itemClass = '';
         if (isCached) {
@@ -531,8 +650,8 @@ function renderShopModal(page) {
                 <div class="type">${item.type}</div>
                 <img src="${item.thumbnail}" alt="${item.title}">
                 <div class="price ${isExpensive ? 'cannot-afford' : ''}">💲${item.price}</div>
-                <button class="buy-btn" ${isExpensive ? 'disabled' : ''}>
-                    ${isCached ? 'رجعه' : 'استخدم'}
+                <button class="buy-btn neo-brutalism" ${isExpensive ? 'disabled' : ''} onclick="handleBuyOrEquip(${globalIndex})">
+                    ${isBought ? (isCached ? arabicText.unequip : arabicText.equip) : arabicText.buy}
                 </button>
             </div>
         `;
@@ -540,15 +659,19 @@ function renderShopModal(page) {
 
     const paginationHtml = `
         <div class="pagination">
-            <button onclick="changePage(${page - 1})" ${page === 1 ? 'disabled' : ''}>Previous</button>
-            <span>Page ${page} of ${Math.ceil(shopItems.length / itemsPerPage)}</span>
-            <button onclick="changePage(${page + 1})" ${endIndex >= shopItems.length ? 'disabled' : ''}>Next</button>
+            <button class="neo-brutalism" onclick="changePage(${page - 1})" ${page === 1 ? 'disabled' : ''}>${arabicText.previous}</button>
+            <span>Page ${page} of ${Math.ceil(sortedShopItems.length / itemsPerPage)}</span>
+            <button class="neo-brutalism" onclick="changePage(${page + 1})" ${endIndex >= sortedShopItems.length ? 'disabled' : ''}>${arabicText.next}</button>
         </div>
     `;
 
     Swal.fire({
         title: '<div class="magical-title">الكشك السحري</div>',
-        html: `<div class="shop-container">${itemsHtml}</div>${paginationHtml}`,
+        html: `
+            ${renderNavigationBar()}
+            <div class="shop-container">${itemsHtml}</div>
+            ${paginationHtml}
+        `,
         width: '80%',
         background: '#1e1e1e',
         customClass: {
@@ -556,49 +679,343 @@ function renderShopModal(page) {
             title: 'magical-title'
         },
         didOpen: () => {
-            document.querySelectorAll('.buy-btn').forEach((btn, index) => {
-                const globalIndex = startIndex + index;
-                const item = itemsToShow[index];
-                btn.addEventListener('click', () => {
-                    if (cachedItems.includes(globalIndex)) {
-                        // Deactivate item
-                        cachedItems = cachedItems.filter(i => i !== globalIndex);
-                        score += item.price; // Refund the price
-                    } else {
-                        // Check if there's an active item of the same type
-                        const activeItemOfSameType = cachedItems.find(i => {
-                            const activeItem = shopItems[i];
-                            return activeItem && activeItem.type === item.type;
-                        });
-
-                        if (activeItemOfSameType) {
-                            // Deactivate the older item
-                            cachedItems = cachedItems.filter(i => i !== activeItemOfSameType);
-                            const olderItem = shopItems[activeItemOfSameType];
-                            score += olderItem.price; // Refund the price
-                        }
-
-                        // Activate the new item
-                        cachedItems.push(globalIndex);
-                        score -= item.price; // Deduct the price
-                        item.callback();
-                    }
-                    // Update localStorage
-                    localStorage.setItem('cachedItems', JSON.stringify(cachedItems));
-                    localStorage.setItem('score', score);
-                    // Update the score display
-                    scoreDisplay.textContent = score;
-                    // Re-render the modal
-                    renderShopModal(currentPage);
-                });
-            });
+            // Style the "Bought Items" button
+            const boughtItemsBtn = document.querySelector('.bought-items-btn');
+            if (boughtItemsBtn) {
+                boughtItemsBtn.style.padding = '5px 10px';
+                boughtItemsBtn.style.marginLeft = 'auto';
+                boughtItemsBtn.style.color = 'black';
+            }
         }
     });
 }
 
+// Handle buy or equip logic
+function handleBuyOrEquip(globalIndex) {
+    const item = shopItems[globalIndex];
+    if (boughtItems.includes(globalIndex)) {
+        // Equip/Unequip logic
+        handleEquipUnequip(globalIndex);
+    } else {
+        // Buy logic
+        if (score >= item.price) {
+            boughtItems.push(globalIndex);
+            score -= item.price;
+
+            // Automatically equip the item after purchase
+            handleEquipUnequip(globalIndex);
+
+            // Update localStorage
+            localStorage.setItem('boughtItems', JSON.stringify(boughtItems));
+            localStorage.setItem('score', score);
+
+            // Update the score display
+            scoreDisplay.textContent = score;
+        }
+    }
+}
+
+// Render the bought items modal
+function renderBoughtItemsModal() {
+    const boughtItemsToShow = boughtItems.map(index => shopItems[index]);
+
+    const itemsHtml = boughtItemsToShow.map((item, index) => {
+        const globalIndex = shopItems.indexOf(item);
+        const isCached = cachedItems.includes(globalIndex);
+
+        return `
+            <div class="shop-item ${isCached ? 'purchased' : ''}" tip="${item.tip}" emoji="${item.emoji}">
+                <div class="title">${item.title}</div>
+                <div class="type">${item.type}</div>
+                <img src="${item.thumbnail}" alt="${item.title}">
+                <div class="price">💲${item.price}</div>
+                <button class="buy-btn neo-brutalism" onclick="handleEquipUnequip(${globalIndex})">
+                    ${isCached ? arabicText.unequip : arabicText.equip}
+                </button>
+            </div>
+        `;
+    }).join('');
+
+    Swal.fire({
+        title: '<div class="magical-title">شنطتي</div>',
+        html: `
+            ${renderNavigationBar()}
+            <div class="shop-container">${itemsHtml}</div>
+        `,
+        width: '80%',
+        background: '#1e1e1e',
+        customClass: {
+            popup: 'magical-modal',
+            title: 'magical-title'
+        }
+    });
+}
+
+// Change page for pagination
 function changePage(newPage) {
     if (newPage < 1 || newPage > Math.ceil(shopItems.length / itemsPerPage)) return;
     currentPage = newPage;
     renderShopModal(currentPage);
 }
+
+
+dyn_ad({
+    containerSelector: 'body', // Replace with your container selector
+    id: 'tutos',
+    position: 'fixed',
+    borderPosition: 'bottom',
+    popImages: [["https://i.ibb.co/JkjSyC1/tutico.png"
+    ]], // Replace with your image path
+    tooltipTheme: 'bubble',
+    shuffleText: true, // Array of texts to shuffle
+    shuffleTextTime: 3, // Interval in seconds
+
+    tippy_zindex:999,
+    zIndex: 4,
+    imageSize:100,
+    emoji: '💰',
+    tip:`دوس عليا و اعمل فولو لكل الصفحات...هيتفتحلك حجات جديده و هظبطك...من غير ما تدفع جنيه`,
+    distance: [[-280, -230]],
+tooltipAutoShow: true,
+    typewriterEffect: true,
+    typewriterSpeed: 50,
+    tippy_height:300,
+    tippy_max_width:150,
+    tippy_max_height:300,
+    scenario: [
+    [
+    {
+        delay:1000,
+         tooltipText:tutorial
+    },
+
+
+      {
+        delay: 2000,
+          event: (element) => {
+      
+  
+// Default social media items
+const socialItems = [
+    {
+      color: '#ff0000',
+      gradientColor: '#c4302b',
+      size: 90,
+      icon: '<svg viewBox="0 0 24 24"><path d="M12 19c-2.3 0-6.4-.2-8.1-.6-.7-.2-1.2-.7-1.4-1.4-.3-1.1-.5-3.4-.5-5s.2-3.9.5-5c.2-.7.7-1.2 1.4-1.4C5.6 5.2 9.7 5 12 5s6.4.2 8.1.6c.7.2 1.2.7 1.4 1.4.3 1.1.5 3.4.5 5s-.2 3.9-.5 5c-.2.7-.7 1.2-1.4 1.4-1.7.4-5.8.6-8.1.6 0 0 0 0 0 0z"/><path d="M9.75 15.25v-6.5L15.25 12l-5.5 3.25z"/></svg>',
+      title: 'الصفحه الرسميه',
+      callback: () => window.open('https://youtube.com/@tut_os', '_blank')
+    },
+    {
+      color: '#ff3897',
+      gradientColor: '#833ab4',
+      size: 70,
+      icon: '<svg viewBox="0 0 24 24"><path d="M16.5 7.5h.01M12 7.5c-2.485 0-4.5 2.015-4.5 4.5s2.015 4.5 4.5 4.5 4.5-2.015 4.5-4.5-2.015-4.5-4.5-4.5zM12 1.5h-3.75c-3.75 0-5.25 1.5-5.25 5.25v10.5c0 3.75 1.5 5.25 5.25 5.25h7.5c3.75 0 5.25-1.5 5.25-5.25v-10.5c0-3.75-1.5-5.25-5.25-5.25H12z"/></svg>',
+      title: 'لو عملت فولو الافلام بتبقي اسرع',
+      callback: () => window.open('https://instagram.com/tutos.official', '_blank')
+    },
+    {
+      color: '#ff0050',
+      gradientColor: '#00f2ea',
+      size: 60,
+      icon: '<svg viewBox="0 0 24 24"><path d="M21 7.5v9c0 3-1.5 4.5-4.5 4.5h-9c-3 0-4.5-1.5-4.5-4.5v-9c0-3 1.5-4.5 4.5-4.5h9c3 0 4.5 1.5 4.5 4.5z"/><path d="M9.72 15.88v-7.5c0-.62.68-1 1.23-.69l6.76 3.75c.54.3.54 1.08 0 1.38l-6.76 3.75c-.55.31-1.23-.07-1.23-.69z"/></svg>',
+      title: 'لو عملت فولو يجيلك افلام اكتر',
+      callback: () => window.open('https://tiktok.com/@tut.os', '_blank')
+    },
+    
+    {
+      color: '#ff0050',
+      gradientColor: '#00f2ea',
+      size: 70,
+      icon: '<svg viewBox="0 0 24 24"><path d="M21 7.5v9c0 3-1.5 4.5-4.5 4.5h-9c-3 0-4.5-1.5-4.5-4.5v-9c0-3 1.5-4.5 4.5-4.5h9c3 0 4.5 1.5 4.5 4.5z"/><path d="M9.72 15.88v-7.5c0-.62.68-1 1.23-.69l6.76 3.75c.54.3.54 1.08 0 1.38l-6.76 3.75c-.55.31-1.23-.07-1.23-.69z"/></svg>',
+      title: 'هيجيلك اخر تحديثات لو عملت فولو',
+      callback: () => window.open('https://tiktok.com/@araglish', '_blank')
+      
+    },
+    
+  ];
+  
+  // Usage: Just create a new instance to spawn the menu
+  new RadialMenu(socialItems);
+      score += 10
+      document.querySelector(`#score-value`).innerHTML =  score
+      },
+          event_type: 'click'
+        },
+
+  
+  ],
+    ],
+
+  });
+
+
+  //notifications
+
+  function notify(options) {
+    const {
+      name,
+      title,
+      emoji,
+      message = 'No message provided.',
+      position = 'right', // 'left' or 'right'
+      y = 20, // pixels from top
+      backgroundColor = '#ffcc00',
+      textColor = '#000000',
+      notificationCount = 0,
+      isCache = true
+    } = options;
+
+    // Check cache only if isCache is true
+    const storageKey = `notification_${name}_${title}`;
+    if (isCache && localStorage.getItem(storageKey)) {
+      return;
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+      .notification-button {
+        position: fixed;
+        min-width: 120px;
+        padding: 12px 24px;
+        background-color: ${backgroundColor};
+        color: ${textColor};
+        border: 3px solid #000000;
+        border-radius: 8px;
+        font-family: system-ui, -apple-system, sans-serif;
+        font-weight: bold;
+        font-size: 14px;
+        box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+        cursor: pointer;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 999999;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transform: scale(0);
+        opacity: 0;
+        pointer-events: none;
+        top: ${y}px;
+      }
+
+      .notification-button.visible {
+        transform: scale(1) translate(0, 0) !important;
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .notification-button:hover {
+        transform: translate(-2px, -2px) scale(1.02) !important;
+        box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.8);
+      }
+
+      .notification-emoji {
+        font-size: 20px;
+      }
+
+      .notification-badge {
+        background-color: #ff4444;
+        color: white;
+        border-radius: 50%;
+        min-width: 20px;
+        height: 20px;
+        padding: 0 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        border: 2px solid #000000;
+        position: absolute;
+        top: -8px;
+        right: -8px;
+      }
+
+
+    `;
+    document.head.appendChild(style);
+
+    const button = document.createElement('div');
+    button.className = 'notification-button';
+    
+    // Content wrapper
+    const content = document.createElement('div');
+    content.style.display = 'flex';
+    content.style.alignItems = 'center';
+    content.style.gap = '10px';
+
+    if (emoji) {
+      const emojiSpan = document.createElement('span');
+      emojiSpan.className = 'notification-emoji';
+      emojiSpan.textContent = emoji;
+      content.appendChild(emojiSpan);
+    }
+
+    const titleSpan = document.createElement('span');
+    titleSpan.textContent = title;
+    content.appendChild(titleSpan);
+
+    button.appendChild(content);
+
+    if (notificationCount > 0) {
+      const badge = document.createElement('div');
+      badge.className = 'notification-badge';
+      badge.textContent = notificationCount > 99 ? '99+' : notificationCount;
+      button.appendChild(badge);
+    }
+
+    // Position setup
+    const offset = 20;
+    if (position === 'left') {
+      button.style.left = `-200px`; // Start off-screen left
+    } else {
+      button.style.right = `-200px`; // Start off-screen right
+    }
+
+    button.addEventListener('click', async () => {
+      await Swal.fire({
+        title,
+        html: marked.parse(message),
+        background: backgroundColor,
+        confirmButtonColor: backgroundColor,
+        backdrop:false,
+      });
+      
+      if (isCache) {
+        localStorage.setItem(storageKey, 'shown');
+      }
+      
+      button.style.transform = 'scale(0)';
+      button.style.opacity = '0';
+      setTimeout(() => button.remove(), 500);
+    });
+
+    document.body.appendChild(button);
+
+    // Animate in based on position
+    requestAnimationFrame(() => {
+      if (position === 'left') {
+        button.style.left = `${offset}px`;
+      } else {
+        button.style.right = `${offset}px`;
+      }
+      button.classList.add('visible');
+      setTimeout(() => button.classList.add('shake'), 500);
+    });
+  }
+
+  function showLeftNotification() {
+    notify({
+      name: 'demo-left',
+      title: 'Left Notification',
+      emoji: '👈',
+      message: 'This notification appears on the **left** side!',
+      position: 'left',
+      y: 100, // 100px from top
+      backgroundColor: '#4CAF50',
+      textColor: '#ffffff',
+      notificationCount: 1,
+      isCache: false
+    });
+  }
+
+
 
