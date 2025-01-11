@@ -5,7 +5,6 @@ e_mousemove = null
 
 
 // ==================dynatip related===========
-const colorThief = new ColorThief(); // Instantiate ColorThief
 let dynatip_color_accuracy = 25;
 let TipGap = 5;
 let TipDelayTime = 300;
@@ -1194,64 +1193,6 @@ async function dyn_ad(options) {
   }
 }
 
-
-//---endec-----
-
-function zend(normalText, hiddenMessage) {
-  const zeroWidthChars = {
-      '0': '\u200B', // Zero Width Space
-      '1': '\u200C', // Zero Width Non-Joiner
-      '2': '\u200D', // Zero Width Joiner
-      '3': '\uFEFF'  // Zero Width No-Break Space
-  };
-
-  const zeroWidthCharsReverse = {
-      '\u200B': '0', // Zero Width Space
-      '\u200C': '1', // Zero Width Non-Joiner
-      '\u200D': '2', // Zero Width Joiner
-      '\uFEFF': '3'  // Zero Width No-Break Space
-  };
-
-  // Encryption
-  if (hiddenMessage !== undefined) {
-      // Convert hidden message to binary
-      let binaryMessage = '';
-      for (let i = 0; i < hiddenMessage.length; i++) {
-          let charCode = hiddenMessage.charCodeAt(i).toString(2);
-          binaryMessage += charCode.padStart(8, '0');
-      }
-
-      // Encode binary message into zero-width characters
-      let encodedMessage = '';
-      for (let i = 0; i < binaryMessage.length; i++) {
-          encodedMessage += zeroWidthChars[binaryMessage[i]];
-      }
-
-      // Combine normal text with encoded message
-      return normalText + encodedMessage;
-  }
-
-  // Decryption
-  else {
-      // Extract zero-width characters
-      let binaryMessage = '';
-      for (let i = 0; i < normalText.length; i++) {
-          let char = normalText[i];
-          if (zeroWidthCharsReverse[char] !== undefined) {
-              binaryMessage += zeroWidthCharsReverse[char];
-          }
-      }
-
-      // Convert binary message to hidden text
-      let hiddenMessage = '';
-      for (let i = 0; i < binaryMessage.length; i += 8) {
-          let byte = binaryMessage.substring(i, i + 8);
-          hiddenMessage += String.fromCharCode(parseInt(byte, 2));
-      }
-
-      return hiddenMessage;
-  }
-}
 
 
 
