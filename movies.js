@@ -52,4 +52,15 @@ cast([
         imdb:6.5,
         vocab:true,
     },
+    {
+        title: "interstellar 2014",
+        thumbnail: "https://img.yts.mx/assets/images/movies/interstellar_2014/medium-cover.jpg",
+        magnet: "magnet:?xt=urn:btih:6E88B3F25BA49D483D740A652BF013C341BC5373&dn=Interstellar+%282014%29+%5B720p%5D+%5BYTS.MX%5D",
+        subs: "https://raw.githubusercontent.com/forgah/forgah.github.io/refs/heads/main/subs/interstellar.srt",
+        genre: ["دراما","خيال علمي"],
+        tip: "فيلم جميل بس لو بتتابع الدحيح...مبتحبش الدحيح دا مش فيلمك",
+        rating:9,
+        imdb:8.7,
+        vocab:true,
+    },
 ]);
