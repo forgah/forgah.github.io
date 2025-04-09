@@ -63,4 +63,16 @@ cast([
         imdb:8.7,
         vocab:true,
     },
+
+    {
+        title: "novocaine",
+        thumbnail: "https://img.yts.mx/assets/images/movies/novocaine_2025/medium-cover.jpg",
+        magnet: "magnet:?xt=urn:btih:D197FE419D2D73C2C161DD3D06ECBA3EA58B2F70&dn=Novocaine+%282025%29+%5B720p%5D+%5BYTS.MX%5D&tr=udp%3A%2F%2",
+        subs: "https://raw.githubusercontent.com/forgah/forgah.github.io/refs/heads/main/subs/novocaine.srt",
+        genre: ["دراما","خيال علمي"],
+        tip: "فيلم جميل بس لو بتتابع الدحيح...مبتحبش الدحيح دا مش فيلمك",
+        rating:9,
+        imdb:8.7,
+        vocab:true,
+    },
 ]);
